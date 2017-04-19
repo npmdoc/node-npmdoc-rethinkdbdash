@@ -63,6 +63,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.rethinkdbdash.rethinkdbdash">
+            function <span class="apidocSignatureSpan"></span>rethinkdbdash
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.rethinkdbdash.connection">
             function <span class="apidocSignatureSpan">rethinkdbdash.</span>connection
             <span class="apidocSignatureSpan">(r, options, resolve, reject)</span>
@@ -3353,6 +3362,34 @@
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.rethinkdbdash" id="apidoc.module.rethinkdbdash">module rethinkdbdash</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.rethinkdbdash.rethinkdbdash" id="apidoc.element.rethinkdbdash.rethinkdbdash">
+        function <span class="apidocSignatureSpan"></span>rethinkdbdash
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function main(options) {
+  var _r = new r();
+
+  if (!helper.isPlainObject(options)) options = {};
+  if (options.pool !== false) _r.createPools(options);
+  _r._options = {};
+  if (options.cursor === true) _r._options.cursor = true;
+  if (options.stream === true) _r._options.stream = true;
+  if (options.optionalRun === false) {
+    delete _r._Term.prototype.then
+    delete _r._Term.prototype.error
+    delete _r._Term.prototype.catch
+    delete _r._Term.prototype.finally
+  }
+  return _r;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
     <h2>
@@ -10234,22 +10271,21 @@ if (helper.isPlainObject(options)) {
   return term;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if (self._options.format === &#x27;primaryKey&#x27;) {
-  query = query.do(function(result) {
-    return self._r.branch(
-      result(&#x27;errors&#x27;).eq(0),
-      self._table.config()(&#x27;primary_key&#x27;).do(function(primaryKey) {
-        return result(&#x27;changes&#x27;)(&#x27;new_val&#x27;)(primaryKey)
-      }),
-      result(self._r.error(result(&#x27;errors&#x27;).coerceTo(&#x27;STRING&#x27;).<span class="apidocCodeKeywordSpan">add</span
->(&#x27; errors returned. First error:\n&#x27;).add(result(&#x27;first_error&#x27;))))
-    )
-  })
-}
+&#x27;stream.js&#x27;,
+&#x27;term.js&#x27;,
+&#x27;transform_stream.js&#x27;,
+&#x27;writable_stream.js&#x27;
+];
 
-query.run(self._connection).then(function(result) {
-  self._inserting = false;
-  if (self._options.format === &#x27;primaryKey&#x27;) {
+var b = browserify(&#x27;./lib/&#x27;)
+b.<span class="apidocCodeKeywordSpan">add</span>(&#x27;./lib/index.js&#x27;)
+for(var i=0; i&#x3c;REQUIRE_FILES.length; i++) {
+b.require(&#x27;./lib/&#x27;+REQUIRE_FILES[i], {expose: &#x27;./lib/&#x27;+REQUIRE_FILES[i]})
+}
+b.require(&#x27;./lib/index.js&#x27;, {expose: &#x27;rethinkdbdash&#x27;})
+b.bundle(function(err, result) {
+if (err) {
+  console.log(err);
 ...</pre></li>
     </ul>
 
